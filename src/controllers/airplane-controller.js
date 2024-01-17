@@ -1,77 +1,87 @@
-const {StatusCodes}=require('http-status-codes');
-const {AirplaneService}=require('../services');
-const { request } = require('express');
-const {SuccessResponse,ErrorResponse} = require('../utils/common');
-const airplane = require('../models/airplane');
-//const { response } = require('express');
-
+const { StatusCodes } = require('http-status-codes');
+const { AirplaneService } = require('../services');
+const { SuccessResponse, ErrorResponse } = require('../utils/common');
 /**
- * post: /airplanes
- * req-body {modelNumber: 'airbus320', capacity:200}
+ * POST : /airplanes 
+ * req-body {modelNumber: 'airbus320', capacity: 200}
  */
-async function createAirplane(req,res){
-    try{
-        
-        const airplane=await AirplaneService.createAirplane({
-            modelNumber:req.body.modelNumber,
+async function createAirplane(req, res) {
+    try {
+        const airplane = await AirplaneService.createAirplane({
+            modelNumber: req.body.modelNumber,
             capacity: req.body.capacity
         });
-
-        
         SuccessResponse.data = airplane;
         return res
-                 .status(StatusCodes.CREATED)
-                 .json(SuccessResponse);
-
-    }catch(error){
-        ErrorResponse.error=error;
+                .status(StatusCodes.CREATED)
+                .json(SuccessResponse);
+    } catch(error) {
+        ErrorResponse.error = error;
         return res
-        .status(error.StatusCodes)
-         .json(ErrorResponse);
+                .status(error.statuscode)
+                .json(ErrorResponse);
     }
 }
-
-
 /**
- * get: /airplanes
+ * POST : /airplanes
  * req-body {}
  */
-async function getAirplanes(req, res){
+async function getAirplanes(req, res) {
     try {
         const airplanes = await AirplaneService.getAirplanes();
-        SuccessResponse.data= airplanes; 
+        SuccessResponse.data = airplanes;
         return res
-        .status(StatusCodes.OK)
-             .json(SuccessResponse);
-    } catch (error) {
-        ErrorResponse.error=error;
+                .status(StatusCodes.OK)
+                .json(SuccessResponse);
+    } catch(error) {
+        ErrorResponse.error = error;
         return res
-        .status(error.StatusCode)
-         .json(ErrorResponse);
+                .status(error.statuscode)
+                .json(ErrorResponse);
+    }
+}
+/**
+ * POST : /airplanes/:id 
+ * req-body {}
+ */
+async function getAirplane(req, res) {
+    try {
+        const airplanes = await AirplaneService.getAirplane(req.params.id);
+        SuccessResponse.data = airplanes;
+        return res
+                .status(StatusCodes.OK)
+                .json(SuccessResponse);
+    } catch(error) {
+        ErrorResponse.error = error;
+        return res
+                .status(error.statuscode)  //////////////////////////////
+                .json(ErrorResponse);
     }
 }
 
 /**
- * post: /airplanes/:id
- * req-body {id}
+ * DELETE : /airplanes/:id
+ * req-body {}
  */
-async function getAirplane(req,res){
+async function destroyAirplane(req, res) {
     try {
-        const airplanes = await AirplaneService.getAirplane(req.params.id);
-        SuccessResponse.data= airplanes; 
+        const airplanes = await AirplaneService.destroyAirplane(req.params.id);
+        SuccessResponse.data = airplanes;
         return res
-              .status(StatusCodes.OK)
-             .json(SuccessResponse);
-    } catch (error) {
-        ErrorResponse.error=error;
+                .status(StatusCodes.OK)
+                .json(SuccessResponse);
+    } catch(error) {
+        ErrorResponse.error = error;
         return res
-        .status(error.StatusCode)
-         .json(ErrorResponse);
+                .status(error.statuscode)
+                .json(ErrorResponse);
     }
 }
 
-module.exports={
+module.exports = {
     createAirplane,
     getAirplanes,
-    getAirplane
+    
+    getAirplane,
+    destroyAirplane
 }
