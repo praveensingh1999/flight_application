@@ -1,6 +1,7 @@
 const {StatusCodes}=require('http-status-codes');
 const {AirplaneService}=require('../services');
 const { request } = require('express');
+const {SuccessResponse,ErrorResponse} = require('../utils/common')
 //const { response } = require('express');
 
 /**
@@ -9,29 +10,23 @@ const { request } = require('express');
  */
 async function createAirplane(req,res){
     try{
-        console.log(request.body);
+        
         const airplane=await AirplaneService.createAirplane({
             modelNumber:req.body.modelNumber,
             capacity: req.body.capacity
         });
+
+        
+        SuccessResponse.data = airplane;
         return res
                  .status(StatusCodes.CREATED)
-                 .json({
-                    success: true,
-                    message: 'successfully create an airplane' ,
-                    data: airplane,
-                    error:{}
-                 });
+                 .json(SuccessResponse);
 
     }catch(error){
+        ErrorResponse.error=error;
         return res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-         .json({
-            success: false,
-            message: 'something went wrong while create an airplane' ,
-            data:{},
-            error:error
-         });
+        .status(error.StatusCodes)
+         .json(ErrorResponse);
     }
 }
 module.exports={
