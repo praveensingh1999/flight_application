@@ -1,7 +1,8 @@
 const {StatusCodes}=require('http-status-codes');
 const {AirplaneService}=require('../services');
 const { request } = require('express');
-const {SuccessResponse,ErrorResponse} = require('../utils/common')
+const {SuccessResponse,ErrorResponse} = require('../utils/common');
+const airplane = require('../models/airplane');
 //const { response } = require('express');
 
 /**
@@ -29,6 +30,23 @@ async function createAirplane(req,res){
          .json(ErrorResponse);
     }
 }
+
+async function getAirplanes(req, res){
+    try {
+        const airplanes = await AirplaneService.getAirplanes();
+        SuccessResponse.data= airplanes; //
+        return res
+        .status(StatusCodes.OK)
+             .json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.error=error;
+        return res
+        .status(error.StatusCodes)
+         .json(ErrorResponse);
+    }
+}
+
 module.exports={
-    createAirplane
+    createAirplane,
+    getAirplanes
 }
