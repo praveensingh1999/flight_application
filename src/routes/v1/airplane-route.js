@@ -17,4 +17,12 @@ router.get('/:id',
 router.delete('/:id', 
         AirplaneController.destroyAirplane);
 
+/**
+ /api/v1/airplane - PATCH
+ Req Body: {capacity: 250}
+ */
+ router.patch('/:id',
+          AirplaneController.updateAirplane);
+
+
 module.exports = router;

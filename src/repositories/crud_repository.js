@@ -23,22 +23,42 @@ class CrudRepository {
 
     async get(data) {
         const response = await this.model.findByPk(data);
+        console.log(response,"get data");
         if(!response) {
             throw new AppError('Not able to fund the resource', StatusCodes.NOT_FOUND);
         }
+       // console.log(response);
         return response;
     }
     async getAll() {
         const response = await this.model.findAll();
         return response;
     }
-    async update(id, data) { // data -> {col: value, ....}
-        const response = await this.model.update(data, {
-            where: {
-                id: id
-            }
-        })
-        return response;
-    }
+    
+
+
+async update(data,id) /*{data  -> {colvalue : "val"}*/  
+{
+  
+
+  const response = await this.model.update(data ,
+     {
+                
+        where :{
+          id :id
+        }
+     })
+    //  console.log(typeof(response), "ajeet");
+    //  console.log(response,"god");
+     if(response[0] == 0) 
+     {
+       // console.log("start if");
+       throw new AppError('Not able to find the resource ',StatusCodes.NOT_FOUND);
+     }
+   
+       return response;
 }
+}
+
+
 module.exports = CrudRepository;
