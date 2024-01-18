@@ -44,7 +44,42 @@ async function destroyCity(req, res) {
     }
 }
 
+
+/**
+ * update : /cities/:id
+ * req-body {}
+ */
+async function updateCity(req,res)
+{
+    try{ 
+        // console.log(req.body.name,req.params.id, "suraj1");
+        // console.log(req, "error occure");
+        //console.log("update city");
+
+         const city = await CityService.updateCity({
+            name : req.body.name   //query is used to take data in parem and body is used to take data in body 
+
+            
+         },req.params.id);
+         SuccessResponse.data = city;
+
+         return res
+                   .status(StatusCodes.ACCEPTED)
+                  .json( SuccessResponse );
+
+    }catch(error) 
+    {
+        ErrorResponse.error = error 
+        return res
+                  .status(error.statuscode) //Error has Self Property statusCode we simply not write again we just
+                                            //Pass it with statusCode
+                  .json(ErrorResponse);
+    }
+}
+
+
 module.exports = {
 createCity,
-destroyCity
+destroyCity,
+updateCity
 }

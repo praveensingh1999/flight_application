@@ -88,6 +88,7 @@ async function updateAirplane(req,res)
     try{ 
         // console.log(req.body.capacity,req.params.id, "suraj1");
         // console.log(req, "error occure");
+        console.log("stared gtts");
 
          const airplanes = await AirplaneService.updateAirplane({
             capacity : req.body.capacity   //query

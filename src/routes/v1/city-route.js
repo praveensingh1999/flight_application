@@ -13,5 +13,11 @@ router.post('/',
 router.delete('/:id', 
         cityController.destroyCity);
 
+/**
+ /api/v1/cities - PATCH
+ Req Body: {name: "varanasi"}
+ */
+        router.patch('/:id',
+        cityController.updateCity);        
 
 module.exports = router;
