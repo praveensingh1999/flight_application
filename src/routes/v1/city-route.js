@@ -9,6 +9,9 @@ router.post('/',
        CityMiddlewares.validateCreateRequest,
         cityController.createCity);
 
+// /api/v1/cities/:id DELETE
+router.delete('/:id', 
+        cityController.destroyCity);
 
 
 module.exports = router;
