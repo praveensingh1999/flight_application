@@ -19,7 +19,8 @@ module.exports = {
       field: 'id'
      },
      
-     onDelete: 'CASCADE'
+     onDelete: 'CASCADE',
+     onUpdate: 'CASCADE'
     });
   },
 

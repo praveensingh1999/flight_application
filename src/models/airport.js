@@ -13,8 +13,17 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
        this.belongsTo(models.City,{
         foreignKey: 'cityId',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
         
+       });
+       this.hasMany(models.Flight, {
+        foreignKey: 'departureAirportId',
+        onDelete: 'CASCADE'
+       });
+       this.hasMany(models.Flight, {
+        foreignKey: 'arrivalAirportId',
+        onDelete: 'CASCADE'
        });
     }
   }
@@ -26,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     code: {
       type:DataTypes.STRING,
-      allowNull:false,
+      allowNull: false,
       unique: true
     },
     address:{ 
@@ -35,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     cityId: {
       type:DataTypes.INTEGER,
-       allowNull:false
+       allowNull: false
     }
   }, {
     sequelize,
