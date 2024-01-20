@@ -6,6 +6,7 @@ class CrudRepository {
         this.model = model;
     }
     async create(data) {
+        
         const response = await this.model.create(data);
         return response;
     }
@@ -22,15 +23,17 @@ class CrudRepository {
     }
 
     async get(data) {
+       
         const response = await this.model.findByPk(data);
-        console.log(response,"get data");
+        
         if(!response) {
             throw new AppError('Not able to fund the resource', StatusCodes.NOT_FOUND);
         }
-       // console.log(response);
+       
         return response;
     }
     async getAll() {
+        
         const response = await this.model.findAll();
         return response;
     }
