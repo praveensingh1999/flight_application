@@ -55,7 +55,7 @@ async function getAirplane(req, res) {
     } catch(error) {
         ErrorResponse.error = error;
         return res
-                .status(error.statuscode)  //////////////////////////////
+                .status(error.statuscode)  
                 .json(ErrorResponse);
     }
 }
