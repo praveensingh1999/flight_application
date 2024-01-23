@@ -15,4 +15,10 @@ router.post('/',
 router.get('/',
        FlightController.getAllFlights);
 
+router.get('/',
+       FlightController.getAllFlights);
+
+router.get('/',
+      FlightController.getFlight);
+
 module.exports = router;
